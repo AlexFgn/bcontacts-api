@@ -1,3 +1,5 @@
+# 1**
+
 #Ignora las dependencias de node
 node_modules/
 #ignora informacion privada/sensible (tokens,claves,etc...)
