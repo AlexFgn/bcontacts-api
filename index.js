@@ -19,7 +19,7 @@ servidor.use(express.json());
 // Usamos URI no URL
 mongoose
     .connect(process.env.MONGO_URI)
-    .then(()=> console.log('Conectado a MondoDB Atlas'))
+    .then(()=> console.log('Conectado a MongoDB Atlas'))
     .catch(err=> console.error('Error al conectar:',err));
 
 
@@ -28,7 +28,9 @@ mongoose
     // Montamos las rutas (GET/POST)
     const rutasContactos = require('./routes/contactos');
     servidor.use('/api/contactos', rutasContactos)
-    
+    // ***
+
+
 // Arrancamos el servidor en el puerto definido en .env o 3000
 const puerto = process.env.PUERTO || 3000;
 servidor.listen(puerto,()=>{

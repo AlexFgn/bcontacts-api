@@ -48,11 +48,53 @@ enrutador.post('/', async (req,res)=>{
         res.status(201).json(nuevoContacto);
     }catch{
         res.status(400).json({error: error.message});
+    }    
+});
+
+
+// 5.3***
+// MODIFICAR Y BORRAR
+
+// PUT /api/contactos/:id
+// Actualiza uno o varios campos de un contacto existente
+enrutador.put('/:id', async (req,res)=>{
+    try{
+        const contactoActualizado = await Contacto.findByIdAndUpdate(
+            req.params.id, //ID de la url
+            req.body,  //nuevos datos
+        {
+            new: true, //devolver el documento modificado
+            runValidators: true //aplicar validaciones del esquema
+        }
+    );
+    if(!contactoActualizado){
+        return res.status(404).json({error: 'Contacto no encontrado'});
+
+    }
+    res.json(contactoActualizado);
+
+    }catch (error){
+        res.status(400).json({error: error.message});
+    }
+});
+
+
+//DELETE /api/contactos/:id
+//Elimina un contacto por su id
+
+enrutador.delete('/:id', async (req,res)=>{
+    try{
+        const eliminado = await Contacto.findByIdAndDelete(req.params.id);
+        if (!eliminado){
+            return res.status(404).json({error: 'Contacto no encontrado'});
+        }
+        res.json({mensaje:'Contacto eliminado correctamente'});
+    }catch(error){
+        res.status(400).json({error: 'Id invalido'});
     }
 
-
-    
 });
+
 
 
 module.exports = enrutador
